@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08111f"><title>90Kick | Football Hub</title>
+<style>
+:root{--bg:#08111f;--panel:#101d30;--panel2:#172840;--line:#293d58;--txt:#eff5ff;--muted:#9aacc5;--green:#39d6a0;--gold:#ffd477;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#173d49 0,transparent 38%),var(--bg);color:var(--txt);font-family:Arial,Helvetica,sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+.shell{max-width:1180px;margin:auto;padding:0 17px}header{position:sticky;top:0;z-index:10;background:#08111fee;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.head{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.brand{font-size:23px;font-weight:900}.brand span{color:var(--green)}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:2px}
+nav{display:flex;gap:5px;overflow:auto}nav button,.btn{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:10px 13px;border-radius:11px;white-space:nowrap}nav button.active,nav button:hover,.btn.primary{background:#153b34;border-color:#2d8068;color:#d8fff0}
+main{padding:23px 0 45px}.page{display:none}.page.active{display:block}.hero{background:linear-gradient(115deg,#153d3a,#10243b 60%,#17213a);border:1px solid #28584f;border-radius:19px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:15px}.eyebrow{color:var(--green);font-size:11px;font-weight:bold}.hero h1{font-size:clamp(25px,4vw,36px);margin:10px 0}.hero p{color:#c5d5e7;line-height:1.9;font-size:13px;margin:0;max-width:600px}.heroMark{font-size:45px;background:#0b1c2d99;border:1px solid #3b6a61;border-radius:17px;padding:15px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:17px;margin-top:20px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px}.section{margin-top:20px}.sectionHead,.pageHead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}.sectionHead h2,.pageHead h1{margin:0;font-size:18px}.pageHead h1{font-size:24px}.muted{color:var(--muted)}.small{font-size:11px}.match{cursor:pointer;transition:background .15s}.match:hover{background:#172840}.match{display:grid;grid-template-columns:76px 1fr 72px 1fr;align-items:center;gap:9px;padding:14px 2px;border-bottom:1px solid #263951}.match:last-child{border:0}.matchGroup{margin:0 0 18px}.matchGroup h2{font-size:15px;margin:0 0 5px}.groupHint{color:var(--muted);font-size:11px;margin:0 0 8px}.matchList{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:0 13px}.date{text-align:center;color:var(--muted);font-size:11px}.club{font-size:13px;font-weight:bold;display:flex;align-items:center;gap:7px}.club.away{justify-content:flex-start}.crest{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:var(--panel2);font-size:14px;flex-shrink:0;overflow:hidden}.crest img{width:100%;height:100%;object-fit:contain;padding:3px}.teamLogo{width:62px;height:62px;display:grid;place-items:center;background:#fff;border-radius:15px;padding:5px;overflow:hidden}.teamLogo img{width:100%;height:100%;object-fit:contain}.teamTop{display:flex;align-items:center;justify-content:space-between;gap:8px}.score{text-align:center;font-size:17px;font-weight:900}.score small{display:block;color:var(--muted);font-size:9px;font-weight:normal;margin-top:4px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}.field{background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:10px 12px;border-radius:10px;min-width:140px}.btn{padding:10px 14px}.btn.primary{color:#eafff6}.btn:disabled{opacity:.5;cursor:wait}.notice{border:1px solid #66552c;background:#2b291d;color:#f1dfaa;padding:12px;border-radius:12px;font-size:11px;line-height:1.9;margin-top:13px}.status{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}.dot{width:8px;height:8px;border-radius:50%;background:#78899f}.dot.ok{background:var(--green)}.dot.err{background:var(--red)}
+.side{display:flex;flex-direction:column;gap:13px}.side h3{margin:0 0 12px;font-size:14px}.quick{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #263951;font-size:12px}.quick:last-child{border:0}.quick button{background:none;border:0;color:var(--green)}
+table{width:100%;border-collapse:collapse;font-size:12px}td,th{text-align:left;padding:12px 8px;border-bottom:1px solid #263951}th{color:var(--muted);font-weight:normal}.teamgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.teamcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:.18s}.teamcard:hover{border-color:var(--green);transform:translateY(-2px)}.teamcard b{display:block;font-size:13px;margin-top:9px}.teamcard small{display:block;color:var(--muted);margin-top:5px;font-size:10px}.star{border:0;background:none;color:#6f829b;font-size:21px}.star.on{color:var(--gold)}
+.newsgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.news{padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.news .emoji{font-size:25px}.news b{display:block;font-size:13px;line-height:1.8;margin-top:9px}
+.teamcard{cursor:pointer;transition:.18s}.teamcard:hover{border-color:var(--green);transform:translateY(-2px)}.leagueSwitch{display:flex;gap:7px;flex-wrap:wrap}.leagueSwitch button{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:9px 12px;border-radius:10px}.leagueSwitch button.active{background:#153b34;border-color:#2d8068;color:#d8fff0}.profileHero{display:flex;align-items:center;gap:16px;background:linear-gradient(115deg,#153d3a,#10243b 60%,#17213a);border:1px solid #28584f;border-radius:18px;padding:20px}.profileHero h1{margin:0 0 7px}.profileStats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:15px 0}.statBox{background:var(--panel);border:1px solid var(--line);padding:13px;border-radius:12px}.statBox b{display:block;font-size:20px;margin-top:5px}.profileGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}.profileGrid .panel{min-width:0}.lineupPitch{background:linear-gradient(90deg,#14523c,#176246);border:5px solid #8ab99c;border-radius:12px;padding:14px;min-height:245px;color:#fff;text-align:center}.lineupRows{display:flex;flex-direction:column;justify-content:space-around;min-height:210px;gap:13px}.lineupRow{display:flex;justify-content:space-around;gap:5px}.playerDot{font-size:10px;background:#f5f7fa;color:#173047;border-radius:20px;padding:5px 7px;min-width:40px}.empty{text-align:center;padding:25px;color:var(--muted);line-height:2}.apiForm{display:grid;grid-template-columns:1fr auto;gap:8px}.apiForm input{min-width:0}.apiState{margin-top:10px;line-height:1.8;font-size:11px;color:var(--muted)}
+.teamProfile{background:#111; border:1px solid #292929;border-radius:18px;overflow:hidden}.profileHead{display:flex;align-items:center;gap:15px;padding:20px}.profileHead .teamLogo{width:58px;height:58px}.profileName{font-size:22px;font-weight:800}.profileCountry{color:var(--muted);font-size:12px;margin-top:5px}.profileActions{margin-left:auto;display:flex;align-items:center;gap:8px}.followBtn{border:1px solid #aaa;background:transparent;color:white;border-radius:22px;padding:9px 18px}.followBtn.following{background:#173d34;border-color:var(--green);color:#d8fff0}.matchTabs{display:flex;gap:0;overflow:auto;border-bottom:1px solid #303030;padding:0 8px;margin-top:16px}.matchTabs button{background:none;border:0;color:#aaa;padding:13px 14px;white-space:nowrap;border-bottom:3px solid transparent}.matchTabs button.active{color:white;border-color:var(--green)}.matchHero{background:#111;border:1px solid #303030;border-radius:18px;padding:18px}.matchScoreline{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;text-align:center}.matchScoreline .club{justify-content:center;flex-direction:column;font-size:13px}.matchScoreline .club .crest{width:62px;height:62px}.matchBigScore{font-size:clamp(30px,7vw,48px);font-weight:800;white-space:nowrap}.matchMeta{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}.matchDetailContent{padding:16px}.profileTabs{display:flex;gap:0;overflow:auto;border-bottom:1px solid #303030;padding:0 12px}.profileTabs button{background:none;border:0;color:#aaa;padding:13px 14px;white-space:nowrap;border-bottom:3px solid transparent}.profileTabs button.active{color:white;border-color:var(--green)}.profileContent{padding:16px}.profileCard{background:#202020;border:1px solid #303030;border-radius:15px;padding:15px;margin-bottom:12px}.profileCard h3{font-size:13px;margin:0 0 12px}.fixtureLine{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;font-size:13px}.fixtureTeam{display:flex;align-items:center;gap:7px}.fixtureTeam .crest{background:#333}.resultPill{background:#087d59;color:#fff;border-radius:6px;padding:5px 9px;font-weight:bold;font-size:12px}.lineupGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.lineupSlot{background:#18283a;border-radius:9px;padding:10px;font-size:12px}.profileStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.profileStat{background:#18283a;padding:12px;border-radius:10px;text-align:center}.profileStat b{display:block;font-size:18px}.profileStat span{color:var(--muted);font-size:10px}.backBtn{background:none;border:0;color:var(--txt);font-size:20px;padding:4px 10px}.leagueSelect{background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:9px 11px;border-radius:10px}
+
+.leagueInfoHero{background:linear-gradient(120deg,#153d3a,#10243b 60%,#17213a);border:1px solid #28584f;border-radius:18px;padding:20px;margin-bottom:14px}.leagueMatchGroup{margin:18px 0}.leagueFixture{display:grid;grid-template-columns:100px 1fr auto 1fr;gap:9px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px;margin:7px 0;font-size:12px}.leagueFixture .team{min-width:0;overflow-wrap:anywhere}.leagueFixture .away{text-align:right;display:flex;justify-content:flex-end;gap:8px}.leagueFixture .kick,.coverageNote{color:var(--muted);font-size:11px;line-height:1.7}.coverageNote{background:var(--panel);border:1px solid var(--line);padding:12px;border-radius:12px;margin:12px 0}
+/* Global league directory and bottom navigation */
+.menuIntro{margin:4px 0 18px}.priorityGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.priorityCard{width:100%;text-align:left;color:var(--txt);font:inherit;background:linear-gradient(135deg,#142b3c,#101d30);border:1px solid var(--line);border-radius:15px;padding:15px;cursor:pointer;min-height:100px;transition:.16s}.priorityCard:hover{border-color:var(--green);transform:translateY(-2px)}.priorityCard b{display:block;margin:9px 0 5px;font-size:14px}.priorityCard small{color:var(--muted);font-size:11px}.priorityRank{font-size:10px;color:var(--green);font-weight:bold;letter-spacing:1px}.directoryTools{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}.alphabet{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0 18px}.alphabet button{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:7px 10px}.alphabet button.active{background:#153b34;border-color:#2d8068;color:#d8fff0}.letterGroup{margin:18px 0}.letterGroup h2{font-size:19px;color:var(--green);border-bottom:1px solid var(--line);padding-bottom:8px}.leagueDirectoryGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.leagueEntry{width:100%;text-align:left;color:var(--txt);font:inherit;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;min-width:0}.leagueEntry:hover{border-color:var(--green)}.leagueEntry b{font-size:12px;display:block;line-height:1.5}.leagueEntry small{color:var(--muted);font-size:10px;display:block;margin-top:5px}.bottomNav{position:fixed;z-index:30;bottom:0;left:0;right:0;background:#08111ff2;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;padding:8px max(16px,calc((100vw - 700px)/2)) calc(8px + env(safe-area-inset-bottom));gap:9px}.bottomNav button{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:13px;padding:11px 8px;font-weight:bold}.bottomNav button.active{background:#153b34;border-color:#2d8068;color:#d8fff0}.bottomNav span{display:block;font-size:10px;font-weight:normal;margin-top:3px}body{padding-bottom:78px}
+@media(max-width:760px){.priorityGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.leagueDirectoryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.side{grid-template-columns:1fr}.priorityCard{padding:12px;min-height:90px}}
+
+footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:10px;line-height:1.9;margin-top:25px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr}.head{padding:12px 0}.brand{margin-left:auto}nav{order:3;width:100%}}
+@media(max-width:560px){.shell{padding:0 12px}.hero{padding:18px}.heroMark{font-size:30px}.side{grid-template-columns:1fr}.teamgrid{grid-template-columns:repeat(2,1fr)}.match{grid-template-columns:48px 1fr 55px 1fr;gap:5px}.club{font-size:11px;gap:4px}.crest{width:23px;height:23px}.score{font-size:14px}.newsgrid{grid-template-columns:1fr}}
+
+/* 90Kick editorial refresh */
+:root{--bg:#071321;--panel:#0e1c2c;--panel2:#14263a;--line:#26394f;--txt:#f4f7fb;--muted:#9aaabd;--green:#43c99a}
+body{background:radial-gradient(ellipse at 50% -30%,#17354a 0,transparent 48%),var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;letter-spacing:.05px}
+header{background:rgba(7,19,33,.96);border-bottom-color:#26394f}
+.brand{letter-spacing:-.6px}.brand small{letter-spacing:2.2px;font-weight:700}
+.hero,.profileHero,.leagueInfoHero{box-shadow:0 16px 40px #0002}
+.panel,.matchList,.teamcard,.leagueEntry,.priorityCard,.news,.transferCard{box-shadow:0 8px 24px #00000018}
+.btn,nav button,.leagueEntry,.priorityCard,.bottomNav button{transition:background .18s,border-color .18s,transform .18s}
+.btn:hover,nav button:hover,.leagueEntry:hover,.priorityCard:hover{border-color:#43c99a}
+.bottomNav{grid-template-columns:repeat(3,minmax(0,1fr));max-width:760px;margin:auto;padding:9px 14px calc(9px + env(safe-area-inset-bottom));background:rgba(7,19,33,.97);border:1px solid #26394f;border-bottom:0;border-radius:18px 18px 0 0;box-shadow:0 -10px 35px #0003;gap:8px}
+.bottomNav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px;padding:8px 5px;font-size:12px;min-width:0}
+.bottomNav button b{font-size:17px;line-height:1.1}.bottomNav span{font-size:9px;white-space:nowrap;opacity:.82}
+body{padding-bottom:86px}
+.transferIntro{display:flex;justify-content:space-between;align-items:center;gap:16px;background:linear-gradient(115deg,#102b3c,#14273c 62%,#172d40);border:1px solid #2b4a5d;border-radius:18px;padding:21px;margin:14px 0}
+.transferIntro h2{font-size:23px;margin:8px 0}.transferIntro p{font-size:12px;color:#b8c8d8;margin:0;line-height:1.7}.transferIcon{font-size:35px;width:65px;height:65px;display:grid;place-items:center;border-radius:16px;background:#071a2a;border:1px solid #31566a;color:var(--green)}
+.transferMeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin:17px 2px 10px}
+.transferList{display:grid;gap:9px}.transferCard{display:grid;grid-template-columns:105px minmax(150px,1fr) minmax(180px,1fr) auto;align-items:center;gap:13px;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.transferDate{font-size:11px;color:var(--txt);font-weight:700}.transferDate span{display:block;color:var(--muted);font-weight:400;font-size:9px;margin-top:5px}
+.transferPlayer{display:flex;align-items:center;gap:10px;min-width:0}.playerInitial{width:37px;height:37px;display:grid;place-items:center;flex-shrink:0;border-radius:11px;background:#18364a;color:#b9e9d8;font-size:11px;font-weight:800}.transferPlayer b{font-size:12px;display:block}.transferPlayer small{font-size:10px;color:var(--muted);display:block;margin-top:4px}
+.transferMove{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:11px;color:var(--muted)}.transferMove b{color:var(--green);font-size:15px}.transferMove strong{color:var(--txt)}
+.dealStatus{font-size:8px;font-weight:800;letter-spacing:.7px;color:#8ee4c1;background:#143b32;border:1px solid #28644f;border-radius:20px;padding:6px 8px;white-space:nowrap}
+.transferSource{font-size:10px;line-height:1.8;color:var(--muted);margin:14px 2px}
+@media(max-width:700px){.transferCard{grid-template-columns:1fr auto;gap:9px}.transferDate{grid-column:1}.transferPlayer{grid-column:1}.transferMove{grid-column:1;grid-row:3}.dealStatus{grid-column:2;grid-row:1;align-self:start}.transferIcon{width:52px;height:52px}}
+@media(max-width:380px){.bottomNav span{font-size:8px}.bottomNav button{font-size:11px}.transferIntro{padding:16px}}
+
+
+/* Compact FotMob-inspired layout */
+:root{--bg:#090909;--panel:#1c1c1c;--panel2:#292929;--line:#303030;--txt:#f1f1f1;--muted:#a5a5a5;--green:#35c879;--gold:#ffd477;--red:#ff8585}
+body{background:#090909;font-family:Arial,Helvetica,sans-serif}
+.shell{max-width:980px;padding-left:13px;padding-right:13px}
+header{background:#171717f5;border-color:#292929}
+.head{min-height:58px}.brand{font-size:21px}.brand small{font-size:8px;letter-spacing:1.5px}
+main{padding:13px 0 28px}
+.hero,.profileHero,.leagueInfoHero{border-radius:13px;padding:15px;box-shadow:none}
+.hero h1{font-size:25px;margin:6px 0}.hero p{font-size:12px;line-height:1.6}.heroMark{font-size:30px;padding:10px;border-radius:12px}
+.section{margin-top:15px}.sectionHead,.pageHead{margin-bottom:8px}.sectionHead h2,.pageHead h1{font-size:16px}.pageHead h1{font-size:21px}
+.priorityGrid{gap:7px}.priorityCard{min-height:0;padding:11px;border-radius:11px;background:#1d1d1d;border-color:#303030}.priorityCard b{font-size:12px;margin:6px 0 3px}.priorityCard small{font-size:10px}
+.panel,.matchList,.teamcard,.leagueEntry,.priorityCard,.news,.transferCard{box-shadow:none}
+.panel,.matchList{border-radius:12px}.matchList{padding:0 10px}.matchGroup{margin-bottom:12px}.matchGroup h2{font-size:14px}.match{padding:10px 1px;grid-template-columns:43px minmax(0,1fr) 48px minmax(0,1fr);gap:5px}.date{font-size:10px}.club{font-size:11px;gap:5px}.crest{width:25px;height:25px;border-radius:7px;font-size:11px}.score{font-size:14px}.score small{font-size:8px}
+.teamcard,.leagueEntry,.news{border-radius:10px;padding:10px}.teamgrid,.leagueDirectoryGrid{gap:7px}.teamLogo{width:48px;height:48px;border-radius:11px}.teamcard b{font-size:12px;margin-top:6px}
+.profileHead{padding:13px}.profileName{font-size:19px}.profileStats{gap:6px;margin:10px 0}.statBox{padding:9px}.statBox b{font-size:17px}.matchHero{padding:13px;border-radius:13px}.matchScoreline{gap:7px}.matchScoreline .club .crest{width:48px;height:48px}.matchDetailContent,.profileContent{padding:11px}.matchTabs button,.profileTabs button{padding:10px 11px;font-size:11px}.profileCard{padding:11px;border-radius:11px;margin-bottom:9px}
+.transferIntro{padding:13px;border-radius:12px;margin:9px 0}.transferIntro h2{font-size:18px;margin:5px 0}.transferIntro p{font-size:11px}.transferIcon{width:46px;height:46px;font-size:26px}.transferMeta{margin:10px 1px 7px;font-size:10px}.transferList{gap:6px}.transferCard{padding:10px;border-radius:10px;gap:8px}.transferPlayer b{font-size:11px}.playerInitial{width:31px;height:31px}.transferMove{font-size:10px}
+.bottomNav{max-width:760px;padding:6px 12px calc(6px + env(safe-area-inset-bottom));gap:3px;background:#171717f7;border:0;border-top:1px solid #303030;border-radius:0;box-shadow:0 -5px 20px #0007}
+.bottomNav button{background:transparent;border:0;border-radius:8px;padding:5px 3px;gap:3px;font-size:11px;font-weight:500;color:#aaa}
+.bottomNav button b{font-size:19px}.bottomNav span{display:none}.bottomNav button.active{background:transparent;color:var(--green);border:0}
+body{padding-bottom:64px}
+@media(max-width:560px){.shell{padding-left:10px;padding-right:10px}.head{min-height:52px}.hero{padding:13px}.heroMark{font-size:25px}.layout{gap:10px}.match{grid-template-columns:38px minmax(0,1fr) 42px minmax(0,1fr);gap:3px}.club{font-size:10px}.crest{width:22px;height:22px}.score{font-size:13px}.teamgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.profileStats{grid-template-columns:repeat(3,minmax(0,1fr))}.bottomNav{padding-left:8px;padding-right:8px}}
+
+
+/* Transfer Centre: compact mobile-first layout inspired by the supplied reference */
+.transferPage{background:#000;margin:0 -17px;padding:0 14px 100px;min-height:75vh;color:#f4f4f4}
+.transferTop{display:flex;align-items:center;gap:12px;padding:15px 2px 19px;border-bottom:1px solid #292929}
+.transferTop .backBtn{font-size:30px;padding:0 7px}.transferTop h1{font-size:20px;margin:0;font-weight:700}.transferTop small{display:none}.transferBell{margin-left:auto;background:none;border:0;color:#eee;font-size:24px}
+.transferFilters{display:flex;align-items:center;gap:10px;overflow:hidden;padding:15px 0 17px;border-bottom:1px solid #303030}
+.filterTool,.transferClubFilters button{border:1px solid #414141;background:#080808;color:#eee;border-radius:28px;padding:10px 15px;white-space:nowrap;font-size:14px}
+.filterTool{font-size:19px;min-width:100px}.filterTool span{color:#555;margin:0 5px}
+.transferClubFilters{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.transferClubFilters button{display:flex;align-items:center;gap:7px;padding:9px 14px}.transferClubFilters button.active{border-color:#65d58a;color:#65d58a}
+.transferMeta{margin:14px 2px 9px;color:#999;font-size:11px}
+.transferList{display:grid;gap:12px;padding-bottom:12px}
+.transferCard{display:block;background:#1e1e1e;border:0;border-radius:17px;padding:15px 14px 14px;box-shadow:none}
+.transferPlayer{display:flex;align-items:center;gap:11px;min-width:0;margin-bottom:15px;position:relative;padding-right:58px}
+.playerInitial{width:58px;height:58px;border-radius:50%;background:linear-gradient(145deg,#555,#292929);border:2px solid #444;color:#eee;font-size:17px;flex-shrink:0}
+.transferPlayer b{font-size:15px;color:#f5f5f5;font-weight:600}.transferPlayer small{font-size:12px;color:#aaa;margin-top:5px}
+.transferDate{position:absolute;right:0;top:17px;color:#aaa;font-size:12px;font-weight:400}.transferDate span{display:none}
+.transferMove{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr);gap:5px;align-items:center;font-size:12px;color:#eee;flex-wrap:nowrap}
+.transferMove>span,.transferMove>strong{height:48px;min-width:0;display:flex;align-items:center;gap:7px;padding:8px 9px;border-radius:10px;background:linear-gradient(110deg,#343434,#252525);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;color:#eee}
+.transferMove>strong{justify-content:flex-end;background:linear-gradient(110deg,#252d36,#202a35)}
+.clubMini{width:25px;height:25px;min-width:25px;border-radius:50%;display:inline-grid;place-items:center;background:#444;color:#eee;font-size:8px;font-weight:700}.transferMove>b{width:34px;height:34px;border-radius:50%;background:#303030;display:grid;place-items:center;color:#fff;font-size:19px;z-index:1;margin:0 -5px}
+.dealStatus{display:none}
+.transferBottomTabs{position:sticky;bottom:10px;z-index:5;display:grid;grid-template-columns:1fr 1fr;max-width:520px;margin:12px auto 0;padding:4px;border-radius:40px;background:#292929;border:1px solid #3b3b3b;box-shadow:0 5px 25px #0009}
+.transferBottomTabs button{border:0;background:transparent;color:#aaa;border-radius:30px;padding:12px 8px;font-weight:600}.transferBottomTabs button.active{background:#444;color:#65d58a}
+.transferSource{font-size:10px;color:#777;line-height:1.7;margin:12px 3px}
+@media(min-width:760px){.transferPage{max-width:760px;margin:0 auto;padding-left:20px;padding-right:20px}.transferCard{padding:18px 20px}.transferPlayer b{font-size:16px}.transferMove{font-size:13px}}
+
+
+/* More complete previous and upcoming match cards */
+.leagueFixture{grid-template-columns:88px minmax(0,1fr) auto minmax(0,1fr);row-gap:5px;padding:12px 13px}.fixtureExtra{grid-column:1/-1;color:var(--muted);font-size:10px;line-height:1.5;border-top:1px solid var(--line);padding-top:6px;margin-top:2px}.playedFixture .score{color:var(--green)}.leagueMatchGroup h2{font-size:16px;margin:0 0 10px}.leagueFixture .team b{font-size:12px}
+
+
+/* 90Kick v2 — deeper dark palette + tighter information density */
+:root{
+ --bg:#070b10;--panel:#10161e;--panel2:#171f2a;--line:#242f3d;
+ --txt:#edf3f8;--muted:#8998a9;--green:#35d39a;--gold:#f5c967;--red:#ff7777;
+ color-scheme:dark;
+}
+html{background:var(--bg)}
+body{background:radial-gradient(ellipse at 50% -35%,#102b2a 0,transparent 42%),var(--bg);color:var(--txt)}
+header{background:rgba(7,11,16,.97);border-bottom:1px solid #202a35}
+.shell{max-width:940px}
+.head{min-height:52px;gap:9px}
+.brand{font-size:20px}
+nav{gap:4px}
+nav button,.btn,.field,.leagueSelect{padding:8px 10px;border-radius:8px;font-size:12px}
+nav button.active,.leagueSwitch button.active,.alphabet button.active,.bottomNav button.active{background:#12372d;border-color:#267957;color:#d9ffef}
+main{padding:10px 0 22px}
+.hero,.profileHero,.leagueInfoHero,.transferIntro{background:linear-gradient(120deg,#10231f,#111b27 68%,#151d29);border-color:#263d38;border-radius:11px;padding:12px}
+.hero h1{font-size:23px;margin:4px 0}.hero p{font-size:11px;line-height:1.55}
+.heroMark{font-size:25px;padding:8px;border-radius:9px}
+.layout{gap:10px;margin-top:12px}
+.panel{padding:11px;border-radius:10px}
+.section{margin-top:12px}
+.sectionHead,.pageHead{margin-bottom:7px}
+.sectionHead h2,.pageHead h1{font-size:15px}.pageHead h1{font-size:19px}
+.matchList{background:#0d131b;border-color:#202a35;padding:0 9px;border-radius:10px}
+.match{padding:8px 0;gap:4px;grid-template-columns:39px minmax(0,1fr) 43px minmax(0,1fr)}
+.club{font-size:10px;gap:4px}.crest{width:22px;height:22px;border-radius:6px}
+.score{font-size:13px}.score small,.date{font-size:9px}
+.matchGroup{margin-bottom:9px}.matchGroup h2{font-size:13px}
+.priorityGrid,.leagueDirectoryGrid{gap:6px}
+.priorityCard{padding:9px;min-height:0;border-radius:9px;background:#101820;border-color:#25313d}
+.priorityCard b{font-size:11px;margin:5px 0 2px}.priorityCard small,.leagueEntry small{font-size:9px}
+.leagueEntry,.teamcard,.news{padding:9px;border-radius:9px;background:#10161e}
+.leagueEntry b,.teamcard b{font-size:11px}
+.teamgrid{gap:6px}.teamLogo{width:43px;height:43px}
+.teamcard small{font-size:9px}
+.profileHead{padding:10px}.profileName{font-size:17px}
+.profileStats{gap:5px;margin:8px 0}.statBox,.profileStat{padding:8px;border-radius:8px}.statBox b,.profileStat b{font-size:15px}
+.profileGrid{gap:9px;margin-top:10px}
+.profileCard{padding:9px;margin-bottom:7px;border-radius:9px}
+.profileTabs button,.matchTabs button{padding:8px 9px;font-size:10px}
+table{font-size:11px}td,th{padding:8px 6px}
+.leagueFixture{padding:8px;margin:5px 0;gap:6px;font-size:10px;border-radius:9px;grid-template-columns:78px minmax(0,1fr) auto minmax(0,1fr)}
+.transferIntro{margin:8px 0}.transferIntro h2{font-size:17px}.transferCard{padding:8px;border-radius:9px;gap:7px}
+.bottomNav{background:rgba(7,11,16,.98);border-top:1px solid #26313d;box-shadow:0 -5px 20px #0008;padding-top:5px;padding-bottom:calc(5px + env(safe-area-inset-bottom))}
+.bottomNav button{padding:4px 3px;color:#9aa8b6}.bottomNav button b{font-size:17px}
+.notice,.coverageNote{padding:9px;border-radius:9px;font-size:10px}
+.empty{padding:17px;font-size:11px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+@media(max-width:560px){
+ .shell{padding-left:9px;padding-right:9px}.head{min-height:48px}
+ .hero{padding:10px}.hero h1{font-size:20px}.heroMark{font-size:22px}
+ .match{grid-template-columns:34px minmax(0,1fr) 38px minmax(0,1fr);gap:2px}
+ .club{font-size:9px}.crest{width:20px;height:20px}.score{font-size:12px}
+ .leagueFixture{grid-template-columns:62px minmax(0,1fr) auto minmax(0,1fr);gap:4px;padding:7px;font-size:9px}
+ .bottomNav{padding-left:6px;padding-right:6px}
+}
+
+</style></head>
+<body>
+<header><div class="shell head">
+ <div class="brand">⚽ <span>90</span>Kick<small>THE FOOTBALL PLATFORM</small></div>
+ <div class="muted small">GLOBAL FOOTBALL DIRECTORY</div>
+</div></header>
+<main class="shell">
+<section id="home" class="page active">
+ <div class="hero menuIntro"><div><div class="eyebrow">90KICK • MAIN MENU</div><h1>Explore world football.</h1><p>Start with the most-followed leagues, or browse the global league directory alphabetically.</p></div><div class="heroMark">🌍</div></div>
+ <div class="section"><div class="sectionHead"><h2>⭐ Top Leagues</h2><span class="muted small">Ranked by global profile and popularity</span></div><div class="priorityGrid" id="priorityLeagues"></div></div>
+ <div class="section"><div class="sectionHead"><h2>🏆 Major Club Competitions</h2><span class="muted small">Continental tournaments</span></div><div class="priorityGrid">
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('UEFA Champions League','Europe')"><b>🏆 UEFA Champions League</b><small>Europe · UEFA</small></button>
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('UEFA Europa League','Europe')"><b>🟠 UEFA Europa League</b><small>Europe · UEFA</small></button>
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('UEFA Conference League','Europe')"><b>🟢 UEFA Conference League</b><small>Europe · UEFA</small></button>
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('AFC Champions League Elite','Asia')"><b>🌏 AFC Champions League Elite</b><small>Asia · AFC</small></button>
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('AFC Champions League Two','Asia')"><b>🌏 AFC Champions League Two</b><small>Asia · AFC</small></button>
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('CONMEBOL Libertadores','South America')"><b>🏆 Copa Libertadores</b><small>South America · CONMEBOL</small></button>
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('CONCACAF Champions Cup','North & Central America')"><b>🌎 CONCACAF Champions Cup</b><small>North & Central America</small></button>
+ <button type="button" class="priorityCard" onclick="openDirectoryLeague('CAF Champions League','Africa')"><b>🌍 CAF Champions League</b><small>Africa · CAF</small></button>
+ </div></div>
+ <div class="section"><div class="sectionHead"><h2>🌐 Browse all leagues</h2><button class="btn primary" onclick="go('leagues')">A–Z Directory →</button></div><div class="muted small">National top divisions from countries around the world.</div></div>
+ <div class="section"><div class="sectionHead"><h2>⭐ Your football hub</h2><span class="muted small">Choose a league to explore</span></div><div class="panel"><p class="muted">Open a league to view its profile, standings when available, and previous and upcoming fixtures.</p><div class="quick"><span>Followed teams</span><b id="favoriteCount">0</b></div><div id="favoriteSummary" class="empty">You haven’t saved any teams yet.</div><button class="btn" onclick="go('teams')">Browse followed teams</button></div></div>
+</section>
+<section id="matchDetail" class="page"><div class="pageHead"><button class="btn" onclick="go('teamProfile')">← Back</button><span class="muted small" id="matchLeagueName">Match details</span></div><div id="matchDetailContent"></div></section>
+<section id="leagueDetail" class="page"><div class="pageHead"><button class="btn" onclick="go('leagues')">← All Leagues</button><span class="muted small" id="leagueDetailCountry"></span></div><div id="leagueDetailContent"></div></section>
+<section id="teamProfile" class="page"><div class="pageHead"><button class="btn" onclick="go('teams')">← Back to teams</button><span class="muted small" id="profileLeague">Premier League</span></div><div id="teamProfileContent"></div></section>
+<section id="teams" class="page"><div class="pageHead"><h1>🛡️ Teams</h1><input id="teamSearch" class="field" placeholder="Search teams..." oninput="renderTeams()"></div><div class="teamgrid" id="teamCards"></div><div class="notice">Choose any team to open its profile. Follow teams to keep them in your favourites.</div></section>
+
+
+<section id="leagues" class="page"><div class="pageHead"><div><h1>🌍 All Leagues A–Z</h1><div class="muted small">Browse domestic leagues and major international club competitions A–Z</div></div></div><div class="directoryTools"><input id="leagueSearch" class="field" placeholder="Search league or country..." oninput="renderLeagues()"><span class="status" id="leagueCount"></span></div><div class="alphabet" id="leagueAlphabet"></div><div id="leagueDirectory"></div><div class="notice">This directory includes domestic leagues and major continental competitions. Match feeds are available where ESPN provides a supported competition ID; other listings may show as directory-only.</div></section>
+
+
+<section id="transfers" class="page transferPage">
+ <div class="transferTop"><button class="backBtn" onclick="go('home')" aria-label="Back">←</button><div><h1>Transfer Centre</h1><small>Latest confirmed moves</small></div><button class="transferBell" aria-label="Notifications">♟</button></div>
+ <div class="transferFilters"><button class="filterTool" onclick="toggleTransferSort()">↕ <span>│</span> ☷</button><div id="transferClubFilters" class="transferClubFilters"></div></div>
+ <div class="transferMeta"><span>Recent transfers</span><span>Checked 23 Nov 2026</span></div>
+ <div id="transferList" class="transferList"></div>
+ <div class="transferBottomTabs"><button class="active" id="confirmedTab" onclick="setTransferTab('confirmed')">Transfers</button><button id="rumoursTab" onclick="setTransferTab('rumours')">Rumours</button></div>
+ <p class="transferSource">Confirmed deals and reported rumours are separated. Rumours are not completed transfers. Sources: <a href="https://www.footballtransfers.com/en/transfers" target="_blank" rel="noopener">FootballTransfers</a> and <a href="https://www.bbc.com/sport/football/transfers" target="_blank" rel="noopener">BBC Sport</a>.</p>
+</section>
+
+<footer>© 90Kick • An independent football directory. Independent football directory • Scores and fixtures are supplied by ESPN where available.</footer>
+</main>
+<nav class="bottomNav" aria-label="Main navigation"><button class="active" data-page="home"><b>⌂</b> Main Menu<span>Popular leagues</span></button><button data-page="leagues"><b>☷</b> All Leagues<span>Browse A–Z</span></button><button data-page="transfers"><b>⇄</b> Transfers<span>Latest confirmed deals</span></button></nav>
+
+<script>
+const API="https://worldcup26.ir/get/soccer/eng.1";
+let currentLeague='pl';
+const LALIGA_TEAMS=['Alaves','Athletic Club','Atletico Madrid','Barcelona','Celta Vigo','Deportivo La Coruna','Espanyol','Getafe','Girona','Levante','Malaga','Osasuna','Racing Santander','Rayo Vallecano','Real Betis','Real Madrid','Real Sociedad','Sevilla','Valencia','Villarreal'];
+const LALIGA_RESULTS=[
+ ['2026-11-06','Sevilla','Alaves','0','0'],['2026-11-07','Malaga','Racing Santander','1','2'],['2026-11-07','Espanyol','Deportivo La Coruna','0','0'],['2026-11-07','Osasuna','Athletic Club','1','1'],['2026-11-07','Valencia','Real Madrid','0','3'],['2026-11-08','Elche','Real Betis','0','2'],['2026-11-08','Real Sociedad','Rayo Vallecano','1','0'],['2026-11-08','Celta Vigo','Levante','0','0'],['2026-11-08','Villarreal','Getafe','2','0'],['2026-11-08','Atletico Madrid','Barcelona','1','2']
+];
+const LALIGA_UPCOMING=[
+ ['2026-11-20','Athletic Club','Espanyol'],
+ ['2026-11-21','Alaves','Deportivo La Coruna'],
+ ['2026-11-21','Rayo Vallecano','Valencia'],
+ ['2026-11-21','Sevilla','Real Betis'],
+ ['2026-11-21','Real Madrid','Celta Vigo'],
+ ['2026-11-22','Barcelona','Villarreal'],
+ ['2026-11-22','Racing Santander','Real Sociedad'],
+ ['2026-11-22','Osasuna','Malaga'],
+ ['2026-11-22','Getafe','Atletico Madrid'],
+ ['2026-11-23','Levante','Elche']
+];
+const LALIGA_TABLE=[
+ ['Barcelona',12,11,0,1,48,13,35,33],['Real Madrid',12,10,0,2,31,10,21,30],['Atletico Madrid',12,9,1,2,23,10,13,28],['Real Betis',12,8,2,2,20,15,5,26],['Real Sociedad',12,7,1,4,21,20,1,22],['Sevilla',12,5,3,4,17,19,-2,18],['Athletic Club',11,4,4,3,15,11,4,16],['Villarreal',12,4,3,5,17,15,2,15],['Deportivo La Coruna',12,3,6,3,15,14,1,15],['Racing Santander',12,4,2,6,17,30,-13,14],['Celta Vigo',12,2,7,3,10,10,0,13],['Alaves',12,3,4,5,15,17,-2,13],['Espanyol',12,3,3,6,13,14,-1,12],['Rayo Vallecano',11,3,3,5,15,21,-6,12],['Getafe',12,3,3,6,8,18,-10,12],['Osasuna',12,3,3,6,12,23,-11,12],['Levante',12,2,5,5,16,21,-5,11],['Elche',12,2,4,6,14,20,-6,10],['Valencia',12,2,3,7,8,20,-12,9],['Malaga',12,0,5,7,9,23,-14,5]
+];
+const PRE_BREAK=[
+ ["2026-11-06","Everton","Coventry City","3","1"],
+ ["2026-11-07","Leeds United","Tottenham Hotspur","1","0"],
+ ["2026-11-07","Arsenal","Hull City","1","0"],
+ ["2026-11-07","Fulham","Newcastle United","1","1"],
+ ["2026-11-07","Nottingham Forest","Manchester City","3","1"],
+ ["2026-11-08","Brighton & Hove Albion","Brentford","2","0"],
+ ["2026-11-08","Crystal Palace","Liverpool","1","3"],
+ ["2026-11-08","Ipswich Town","Bournemouth","1","2"],
+ ["2026-11-08","Sunderland","Chelsea","1","0"],
+ ["2026-11-08","Manchester United","Aston Villa","4","4"]
+];
+const NEXT_AFTER_BREAK=[
+ ["2026-11-21","Manchester City","Fulham"],
+ ["2026-11-21","Bournemouth","Nottingham Forest"],
+ ["2026-11-21","Aston Villa","Sunderland"],
+ ["2026-11-21","Chelsea","Leeds United"],
+ ["2026-11-21","Coventry City","Crystal Palace"],
+ ["2026-11-21","Tottenham Hotspur","Ipswich Town"],
+ ["2026-11-21","Newcastle United","Arsenal"],
+ ["2026-11-22","Hull City","Brighton & Hove Albion"],
+ ["2026-11-22","Liverpool","Manchester United"],
+ ["2026-11-23","Brentford","Everton"]
+];
+const PL_UPCOMING_MORE=[
+ ['2026-11-27','Nottingham Forest','Chelsea'],
+ ['2026-11-28','Leeds United','Coventry City'],
+ ['2026-11-28','Manchester United','Brentford'],
+ ['2026-11-28','Ipswich Town','Aston Villa'],
+ ['2026-11-29','Everton','Liverpool'],
+ ['2026-11-29','Brighton & Hove Albion','Newcastle United'],
+ ['2026-11-29','Crystal Palace','Hull City'],
+ ['2026-11-29','Fulham','Bournemouth'],
+ ['2026-11-29','Sunderland','Tottenham Hotspur'],
+ ['2026-11-29','Arsenal','Manchester City']
+];
+function activeUpcoming(){return currentLeague==='laliga'?LALIGA_UPCOMING:NEXT_AFTER_BREAK.concat(PL_UPCOMING_MORE)}
+const PREVIOUS_ROUND=[
+ ["2026-10-31","Aston Villa","Fulham","1","1"],
+ ["2026-10-31","Tottenham Hotspur","Crystal Palace","2","0"],
+ ["2026-10-31","Bournemouth","Leeds United","2","0"],
+ ["2026-10-31","Brentford","Nottingham Forest","2","0"],
+ ["2026-10-31","Coventry City","Sunderland","3","1"],
+ ["2026-10-31","Hull City","Ipswich Town","2","2"],
+ ["2026-10-31","Manchester City","Brighton & Hove Albion","0","1"],
+ ["2026-10-31","Chelsea","Manchester United","2","0"]
+];
+const TEAM_LOGOS={
+ // Additional manually pinned teams outside the European base set.
+ "Al Ittihad":"2276","Al-Ittihad":"2276","Kashima Antlers":"7115","Cerezo Osaka":"7109","Atlanta United":"18418",
+ "Arsenal":"359","Aston Villa":"362","Bournemouth":"349","Brentford":"337",
+ "Brighton & Hove Albion":"331","Brighton":"331","Chelsea":"363","Coventry City":"388",
+ "Crystal Palace":"384","Everton":"368","Fulham":"370","Hull City":"306",
+ "Ipswich Town":"373","Ipswich":"373","Leeds United":"357","Leeds":"357",
+ "Liverpool":"364","Manchester City":"382","Manchester United":"360",
+ "Newcastle United":"361","Newcastle":"361","Nottingham Forest":"393",
+ "Sunderland":"366","Tottenham Hotspur":"367","Tottenham":"367",
+ "Alaves":"96","Alavés":"96","Athletic Club":"93","Atletico Madrid":"1068","Atlético Madrid":"1068","Barcelona":"83","Celta Vigo":"85","Deportivo La Coruna":"90","Deportivo":"90","Elche":"3751","Elche CF":"3751","Espanyol":"88","Getafe":"2922","Girona":"9812","Levante":"1538","Levante UD":"1538","Malaga":"99","Málaga":"99","Osasuna":"97","Racing Santander":"87","Rayo Vallecano":"101","Real Betis":"244","Real Madrid":"86","Real Sociedad":"89","Sevilla":"243","Valencia":"94","Villarreal":"102",
+ // Serie A — manually pinned ESPN club IDs
+ "AC Milan":"103","Milan":"103","Atalanta":"105","Bologna":"107","Cagliari":"2925","Como":"2572","Fiorentina":"109","Frosinone":"4057","Genoa":"3263","Internazionale":"110","Inter":"110","Juventus":"111","Lazio":"112","Lecce":"113","Monza":"4007","Napoli":"114","Parma":"115","AS Roma":"104","Roma":"104","Sassuolo":"3997","Torino":"239","Udinese":"118","Venezia":"17530",
+ // Bundesliga — manually pinned ESPN club IDs
+ "Union Berlin":"598","1. FC Union Berlin":"598","Bayer Leverkusen":"131","Bayern Munich":"132","Bayern München":"132","Borussia Dortmund":"124","Borussia Monchengladbach":"268","Borussia Mönchengladbach":"268","Eintracht Frankfurt":"125","Augsburg":"3841","FC Augsburg":"3841","FC Cologne":"122","Koln":"122","Köln":"122","Hamburg":"127","Hamburg SV":"127","Mainz":"2950","RB Leipzig":"11420","Freiburg":"126","SC Freiburg":"126","Paderborn":"3307","Schalke 04":"133","Elversberg":"10388","Hoffenheim":"7911","Stuttgart":"134","Werder Bremen":"137",
+ // Ligue 1 — manually pinned ESPN club IDs
+ "Auxerre":"172","AJ Auxerre":"172","Angers":"7868","Brest":"6997","Le Havre":"3236","Le Havre AC":"3236","Le Mans":"2697","Lens":"175","Lille":"166","Lorient":"273","Lyon":"167","Marseille":"176","Monaco":"174","AS Monaco":"174","Nice":"2502","Paris FC":"6851","Paris Saint-Germain":"160","PSG":"160","Rennes":"169","Stade Rennais":"169","Strasbourg":"180","Toulouse":"179","Troyes":"170",
+ // Eredivisie — manually pinned ESPN club IDs
+ "ADO Den Haag":"2726","Ajax":"139","Ajax Amsterdam":"139","AZ":"140","AZ Alkmaar":"140","Excelsior":"2566","Groningen":"145","FC Groningen":"145","Twente":"152","FC Twente":"152","Utrecht":"153","FC Utrecht":"153","Feyenoord":"142","Feyenoord Rotterdam":"142","Fortuna Sittard":"143","Go Ahead Eagles":"3706","Heerenveen":"146","NEC":"147","NEC Nijmegen":"147","PEC Zwolle":"2565","PSV":"148","PSV Eindhoven":"148","Cambuur":"3736","SC Cambuur":"3736","Sparta Rotterdam":"151","Telstar":"3735","Willem II":"156",
+ // Primeira Liga — manually pinned ESPN club IDs
+ "Academico de Viseu":"21607","Académico de Viseu":"21607","Alverca":"21613","Arouca":"15784","Benfica":"1929","Braga":"2994","Nacional":"3472","C.D. Nacional":"3472","Casa Pia":"21581","Estoril":"12216","Estrela":"21610","Famalicao":"12698","FC Famalicao":"12698","Porto":"437","FC Porto":"437","Gil Vicente":"3699","Maritimo":"552","Marítimo":"552","Moreirense":"3696","Rio Ave":"3822","Santa Clara":"12215","Sporting CP":"2250","Vitoria de Guimaraes":"5309","Vitória de Guimaraes":"5309"
+};
+const EXTRA_TEAM_LOGOS={
+ // Saudi Pro League: explicitly pinned club marks and verified ESPN team IDs.
+ "al ahli":"https://a.espncdn.com/i/teamlogos/soccer/500/8346.png",
+ "al-ahli":"https://a.espncdn.com/i/teamlogos/soccer/500/8346.png",
+ "al ahli saudi":"https://a.espncdn.com/i/teamlogos/soccer/500/8346.png",
+ "al ahli saudi fc":"https://a.espncdn.com/i/teamlogos/soccer/500/8346.png",
+ "al nassr":"https://assets.football-logos.cc/logos/saudi-arabia/1500x1500/al-nassr.7d38170b.png",
+ "al-nassr":"https://assets.football-logos.cc/logos/saudi-arabia/1500x1500/al-nassr.7d38170b.png",
+ "al ittihad":"https://a.espncdn.com/i/teamlogos/soccer/500/2276.png",
+ "al-ittihad":"https://a.espncdn.com/i/teamlogos/soccer/500/2276.png",
+ // Verified Japanese and MLS team IDs.
+ "kashima antlers":"https://a.espncdn.com/i/teamlogos/soccer/500/7115.png",
+ "cerezo osaka":"https://a.espncdn.com/i/teamlogos/soccer/500/7109.png",
+ "atlanta united":"https://a.espncdn.com/i/teamlogos/soccer/500/18418.png"
+};
+// Team crests: known IDs first, then logos discovered from ESPN's team catalogue
+// for every league connected in ESPN_LEAGUE_MAP.
+// Logos are deliberately maintained as a static, hand-curated dictionary.
+// This avoids relying on ESPN's retired site.api host or a runtime team-catalogue fetch.
+function normalizeLogoName(name){return String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/&/g,'and').replace(/\b(fc|cf|afc|sc|club)\b/g,'').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ')}
+function logoUrl(name){
+ const raw=String(name||'').trim(),key=raw.toLowerCase();
+ if(EXTRA_TEAM_LOGOS[key])return EXTRA_TEAM_LOGOS[key];
+ const id=TEAM_LOGOS[raw];
+ if(id)return `https://a.espncdn.com/i/teamlogos/soccer/500/${id}.png`;
+ const norm=normalizeLogoName(raw);
+ const match=Object.entries(TEAM_LOGOS).find(([n])=>normalizeLogoName(n)===norm);
+ return match?`https://a.espncdn.com/i/teamlogos/soccer/500/${match[1]}.png`:null;
+}
+function logoMarkup(name,cls="crest"){
+ const url=logoUrl(name),key=normalizeLogoName(name);
+ return url?`<span class="${cls}"><img src="${url}" alt="${name} logo" loading="lazy" onerror="this.parentElement.textContent='⚽'"></span>`:`<span class="${cls}" data-logo-key="${key.replace(/\"/g,'')}">⚽</span>`;
+}
+function refreshLogoPlaceholders(){document.querySelectorAll('[data-logo-key]').forEach(el=>{const url=logoUrl(el.dataset.logoKey);if(!url)return;const label=el.getAttribute('aria-label')||el.dataset.logoKey;el.innerHTML=`<img src="${url}" alt="${label} logo" loading="lazy" onerror="this.parentElement.textContent='⚽'">`;el.removeAttribute('data-logo-key')})}
+function loadAllLeagueLogos(){refreshLogoPlaceholders();}
+let standings=[],allTeams=[],selectedTeam=null,favorites=[];
+try{favorites=JSON.parse(localStorage.getItem("90kick_favorites")||"[]")}catch(e){favorites=[]}
+const $=id=>document.getElementById(id);
+
+const WORLD_LEAGUES=[
+// International and continental club competitions
+['AFC Champions League Elite','Asia','AFC Clubs'],['AFC Champions League Two','Asia','AFC Clubs'],
+['CAF Champions League','Africa','CAF Clubs'],['CAF Confederation Cup','Africa','CAF Clubs'],
+['CONCACAF Champions Cup','North & Central America','CONCACAF Clubs'],
+['CONMEBOL Libertadores','South America','CONMEBOL Clubs'],['CONMEBOL Sudamericana','South America','CONMEBOL Clubs'],
+['FIFA Club World Cup','Worldwide','FIFA'],['OFC Champions League','Oceania','OFC Clubs'],
+['UEFA Champions League','Europe','UEFA Clubs'],['UEFA Conference League','Europe','UEFA Clubs'],
+['UEFA Europa League','Europe','UEFA Clubs'],["UEFA Women's Champions League",'Europe','UEFA Clubs'],
+['A-League Men','Australia','AFC'],['Algerian Ligue Professionnelle 1','Algeria','CAF'],['Allsvenskan','Sweden','UEFA'],['Austrian Bundesliga','Austria','UEFA'],['Azerbaijan Premier League','Azerbaijan','UEFA'],
+['Bangladesh Premier League','Bangladesh','AFC'],['Belgian Pro League','Belgium','UEFA'],['Botola Pro','Morocco','CAF'],['Brasileirão Série A','Brazil','CONMEBOL'],['Bulgarian First League','Bulgaria','UEFA'],
+['Canadian Premier League','Canada','CONCACAF'],['Categoría Primera A','Colombia','CONMEBOL'],['Chinese Super League','China','AFC'],['Costa Rican Primera División','Costa Rica','CONCACAF'],['Croatian Football League','Croatia','UEFA'],['Cypriot First Division','Cyprus','UEFA'],['Czech First League','Czechia','UEFA'],
+['Danish Superliga','Denmark','UEFA'],['Ecuadorian Serie A','Ecuador','CONMEBOL'],['Egyptian Premier League','Egypt','CAF'],['Eliteserien','Norway','UEFA'],['Eredivisie','Netherlands','UEFA'],['English Premier League','England','UEFA'],['Estonian Premium Liiga','Estonia','UEFA'],
+['Finnish Veikkausliiga','Finland','UEFA'],['French Ligue 1','France','UEFA'],
+['German Bundesliga','Germany','UEFA'],['Ghana Premier League','Ghana','CAF'],['Greek Super League','Greece','UEFA'],['Guatemalan Liga Nacional','Guatemala','CONCACAF'],
+['Honduran Liga Nacional','Honduras','CONCACAF'],['Hong Kong Premier League','Hong Kong','AFC'],['Hungarian NB I','Hungary','UEFA'],
+['Icelandic Besta deild','Iceland','UEFA'],['Indian Super League','India','AFC'],['Indonesian Liga 1','Indonesia','AFC'],['Iranian Persian Gulf Pro League','Iran','AFC'],['Iraqi Stars League','Iraq','AFC'],['Irish Premier Division','Ireland','UEFA'],['Israeli Premier League','Israel','UEFA'],['Italian Serie A','Italy','UEFA'],
+['Jamaican Premier League','Jamaica','CONCACAF'],['Japanese J1 League','Japan','AFC'],['Jordanian Pro League','Jordan','AFC'],
+['Kazakhstan Premier League','Kazakhstan','UEFA'],['Kenyan Premier League','Kenya','CAF'],['K League 1','South Korea','AFC'],['Kuwait Premier League','Kuwait','AFC'],
+['Latvian Higher League','Latvia','UEFA'],['Lebanese Premier League','Lebanon','AFC'],['Liga MX','Mexico','CONCACAF'],['Liga Portugal','Portugal','UEFA'],['Lithuanian A Lyga','Lithuania','UEFA'],['Luxembourg National Division','Luxembourg','UEFA'],
+['Malaysian Super League','Malaysia','AFC'],['Maltese Premier League','Malta','UEFA'],['Major League Soccer','United States','CONCACAF'],['Moldovan Super Liga','Moldova','UEFA'],
+['Nepal Super League','Nepal','AFC'],['New Zealand National League','New Zealand','OFC'],['Nigerian Premier Football League','Nigeria','CAF'],['North Macedonian First League','North Macedonia','UEFA'],['Norwegian Eliteserien','Norway','UEFA'],
+['Oman Professional League','Oman','AFC'],
+['Paraguayan Primera División','Paraguay','CONMEBOL'],['Peruvian Primera División','Peru','CONMEBOL'],['Polish Ekstraklasa','Poland','UEFA'],['Qatar Stars League','Qatar','AFC'],
+['Romanian SuperLiga','Romania','UEFA'],['Russian Premier League','Russia','UEFA'],
+['Saudi Pro League','Saudi Arabia','AFC'],['Scottish Premiership','Scotland','UEFA'],['Serbian SuperLiga','Serbia','UEFA'],['Singapore Premier League','Singapore','AFC'],['Slovak First Football League','Slovakia','UEFA'],['Slovenian PrvaLiga','Slovenia','UEFA'],['South African Premiership','South Africa','CAF'],['Spanish LaLiga','Spain','UEFA'],['Swiss Super League','Switzerland','UEFA'],
+['Tajikistan Higher League','Tajikistan','AFC'],['Tanzanian Premier League','Tanzania','CAF'],['Thai League 1','Thailand','AFC'],['Tunisian Ligue Professionnelle 1','Tunisia','CAF'],['Turkish Süper Lig','Türkiye','UEFA'],
+['UAE Pro League','United Arab Emirates','AFC'],['Ukrainian Premier League','Ukraine','UEFA'],['Uruguayan Primera División','Uruguay','CONMEBOL'],['Uzbekistan Super League','Uzbekistan','AFC'],
+['Venezuelan Primera División','Venezuela','CONMEBOL'],['Vietnam V.League 1','Vietnam','AFC'],
+['Welsh Cymru Premier','Wales','UEFA'],
+['Zambian Super League','Zambia','CAF'],['Zimbabwe Premier Soccer League','Zimbabwe','CAF']
+];
+const FEATURED_LEAGUES=[['Premier League','England','🇬🇧','01','pl'],['LaLiga','Spain','🇪🇸','02','laliga'],['Serie A','Italy','🇮🇹','03','directory'],['Bundesliga','Germany','🇩🇪','04','directory'],['Ligue 1','France','🇫🇷','05','directory'],['Saudi Pro League','Saudi Arabia','🇸🇦','06','directory'],['Eredivisie','Netherlands','🇳🇱','07','directory'],['Primeira Liga','Portugal','🇵🇹','08','directory'],['Major League Soccer','United States','🇺🇸','09','directory'],['Brasileirão Série A','Brazil','🇧🇷','10','directory'],['Liga MX','Mexico','🇲🇽','11','directory'],['J1 League','Japan','🇯🇵','12','directory']];
+const ESPN_LEAGUE_MAP={
+// Featured competitions
+'Premier League':'eng.1','English Premier League':'eng.1','UEFA Champions League':'uefa.champions','UEFA Europa League':'uefa.europa','UEFA Conference League':'uefa.europa.conf',"UEFA Women's Champions League":'uefa.wchampions','AFC Champions League Elite':'afc.champions','AFC Champions League Two':'afc.cup','CONCACAF Champions Cup':'concacaf.champions','CONMEBOL Libertadores':'conmebol.libertadores','CONMEBOL Sudamericana':'conmebol.sudamericana','CAF Champions League':'caf.champions','CAF Confederation Cup':'caf.confed','FIFA Club World Cup':'fifa.cwc','LaLiga':'esp.1','Spanish LaLiga':'esp.1','Serie A':'ita.1','Italian Serie A':'ita.1','Bundesliga':'ger.1','German Bundesliga':'ger.1','Ligue 1':'fra.1','French Ligue 1':'fra.1','Saudi Pro League':'ksa.1','Eredivisie':'ned.1','Primeira Liga':'por.1','Liga Portugal':'por.1','Major League Soccer':'usa.1','Brasileirão Série A':'bra.1','Liga MX':'mex.1','J1 League':'jpn.1','Japanese J1 League':'jpn.1',
+// Other competitions with known ESPN league slugs
+'A-League Men':'aus.1','Scottish Premiership':'sco.1','Belgian Pro League':'bel.1','Turkish Süper Lig':'tur.1','Swiss Super League':'sui.1','Austrian Bundesliga':'aut.1','Danish Superliga':'den.1','Norwegian Eliteserien':'nor.1','K League 1':'kor.1','Allsvenskan':'swe.1','Russian Premier League':'rus.1','Greek Super League':'gre.1','Polish Ekstraklasa':'pol.1','Czech First League':'cze.1','Croatian Football League':'cro.1','Romanian SuperLiga':'rou.1','Ukrainian Premier League':'ukr.1','Argentine Primera División':'arg.1','Colombian Categoría Primera A':'col.1'};
+let selectedLeagueInfo=null,leagueFetchToken=0;
+function leagueDateKey(d){return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
+const leagueEventCache={};
+function leagueFixtureCard(e){const comp=e.competitions?.[0]||{},c=comp.competitors||[],h=c.find(x=>x.homeAway==='home')||c[0]||{},a=c.find(x=>x.homeAway==='away')||c[1]||{},hn=h.team?.displayName||h.team?.name||'Home',an=a.team?.displayName||a.team?.name||'Away',done=e.status?.type?.state==='post',when=new Date(e.date),dt=Number.isNaN(when.getTime())?'':when.toLocaleString('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}),venue=comp.venue?.fullName||comp.venue?.address?.city||'',round=comp.series?.summary||comp.notes?.[0]?.headline||'',status=(['in','live'].includes(String(e.status?.type?.state||'').toLowerCase())?'LIVE':e.status?.type?.detail)||(done?'Full Time':'Scheduled'),meta=[round,venue,status].filter(Boolean).join(' · ');leagueEventCache[String(e.id)]=e;return `<div class="leagueFixture ${done?'playedFixture':'upcomingFixture'}" role="button" tabindex="0" style="cursor:pointer" onclick="openLeagueFixture('${String(e.id).replace(/[^a-zA-Z0-9_-]/g,'')}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLeagueFixture('${String(e.id).replace(/[^a-zA-Z0-9_-]/g,'')}')}"><span class="kick">${dt}</span><span class="team"><b>${hn}</b></span><b class="score">${done?(h.score??'—')+' - '+(a.score??'—'):'vs'}</b><span class="team away"><b>${an}</b></span>${meta?`<div class="fixtureExtra">${meta}</div>`:''}<div class="fixtureExtra">View full match details →</div></div>`}
+async function loadLeagueDetail(){
+ if(!selectedLeagueInfo)return;
+ const token=++leagueFetchToken,{name,country}=selectedLeagueInfo;
+ const slug=ESPN_LEAGUE_MAP[name]||null,box=$('leagueDetailContent');
+ $('leagueDetailCountry').textContent=country||'';
+ box.innerHTML=`<div class="leagueInfoHero"><div class="eyebrow">90KICK • LEAGUE PROFILE</div><h1>${name}</h1><div class="muted">${country||''}</div></div><div class="empty">Loading league information…</div>`;
+ if(!slug){
+  box.innerHTML=`<div class="leagueInfoHero"><div class="eyebrow">90KICK • LEAGUE PROFILE</div><h1>${name}</h1><div class="muted">${country||''}</div></div><div class="coverageNote">This competition is listed in the directory, but its ESPN match-feed ID is not configured yet. No results or fixtures are being invented.</div>`;
+  return;
+ }
+ const now=new Date(),pastFrom=new Date(now),futureTo=new Date(now);
+ pastFrom.setDate(pastFrom.getDate()-120);futureTo.setDate(futureTo.getDate()+90);
+ const base=`https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}/scoreboard`;
+ const fetchMonth=async(monthKey)=>{
+  // ESPN retired date-range requests (YYYYMMDD-YYYYMMDD); month requests remain supported.
+  const url=`${base}?dates=${monthKey}&limit=500`;
+  const r=await fetch(url,{headers:{'Accept':'application/json'}});
+  if(!r.ok)throw new Error(`HTTP ${r.status} (${monthKey})`);
+  const data=await r.json();
+  if(!Array.isArray(data?.events))throw new Error(`Invalid fixtures response (${monthKey})`);
+  return data.events;
+ };
+ const monthKeys=(from,to)=>{
+  const out=[];const cursor=new Date(from.getFullYear(),from.getMonth(),1);
+  const last=new Date(to.getFullYear(),to.getMonth(),1);
+  while(cursor<=last){out.push(`${cursor.getFullYear()}${String(cursor.getMonth()+1).padStart(2,'0')}`);cursor.setMonth(cursor.getMonth()+1)}
+  return out;
+ };
+ try{
+  const ranges=monthKeys(pastFrom,futureTo);
+  // Fetch current scoreboard separately: monthly schedule responses may omit games already in progress.
+  const currentRequest=fetch(`${base}?limit=100`).then(async r=>{if(!r.ok)throw new Error(`HTTP ${r.status} (current scoreboard)`);const d=await r.json();if(!Array.isArray(d?.events))throw new Error('Invalid current scoreboard response');return d.events;});
+  const [monthResults,currentResult]=await Promise.all([
+   Promise.allSettled(ranges.map(fetchMonth)),
+   Promise.allSettled([currentRequest])
+  ]);
+  if(token!==leagueFetchToken)return;
+  const allMap=new Map();
+  monthResults.forEach(r=>{if(r.status==='fulfilled')r.value.forEach(e=>{if(e?.id)allMap.set(e.id,e)})});
+  if(currentResult[0].status==='fulfilled')currentResult[0].value.forEach(e=>{if(e?.id)allMap.set(e.id,e)});
+  const all=[...allMap.values()];
+  const isLive=e=>['in','live'].includes(String(e.status?.type?.state||'').toLowerCase())||e.status?.type?.name==='STATUS_IN_PROGRESS';
+  const live=all.filter(isLive).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const past=all.filter(e=>!isLive(e)&&e.status?.type?.state==='post'&&new Date(e.date)>=pastFrom&&new Date(e.date)<=now).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const future=all.filter(e=>!isLive(e)&&e.status?.type?.state!=='post'&&new Date(e.date)>=now&&new Date(e.date)<=futureTo).sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,10);
+  let table='';
+  try{
+   const tr=await fetch(`https://site.api.espn.com/apis/v2/sports/soccer/${slug}/standings`);
+   if(tr.ok){const td=await tr.json(),groups=Array.isArray(td.children)?td.children:[],rows=[...groups.flatMap(c=>c.standings?.entries||[]),...(td.standings?.entries||[])];
+    if(rows.length)table=`<div class="profileCard"><h2>League standings</h2>${rows.slice(0,30).map((x,i)=>`<div class="quick"><span>${i+1}. ${x.team?.displayName||x.team?.name||'Team'}</span><b>${x.stats?.find(z=>z.name==='points')?.displayValue||'—'} pts</b></div>`).join('')}</div>`;
+   }
+  }catch(e){}
+  const failedResults=[...monthResults,currentResult[0]].filter(r=>r.status==='rejected');
+  const failed=failedResults.length;
+  const success=monthResults.filter(r=>r.status==='fulfilled').length+(currentResult[0].status==='fulfilled'?1:0);
+  const failureDetails=[...new Set(failedResults.map(r=>String(r.reason?.message||r.reason||'Unknown network error')))].slice(0,3).join(' | ');
+  let status='';
+  if(!success)status=`<div class="coverageNote"><b>Match feed error:</b> ${failureDetails.replace(/[<>]/g,'')}</div><div class="small muted">This is the actual browser error, not an empty league result.</div><button class="btn primary" onclick="loadLeagueDetail()">Retry</button>`;
+  else if(failed)status=`<div class="coverageNote">Some date ranges could not be loaded. Showing all verified matches returned by the feed. (${failed} failed requests)</div>`;
+  else status=`<div class="coverageNote">Verified match feed · Previous 120 days · Upcoming 90 days.</div>`;
+  box.innerHTML=`<div class="leagueInfoHero"><div class="eyebrow">90KICK • LEAGUE PROFILE</div><h1>${name}</h1><div class="muted">${country} · ${all.length} matches found</div></div>${table}${status}${live.length?`<div class="leagueMatchGroup"><h2>🔴 Live matches (${live.length})</h2>${live.map(leagueFixtureCard).join('')}</div>`:''}<div class="leagueMatchGroup"><h2>📅 Upcoming matches (${future.length})</h2>${future.length?future.map(leagueFixtureCard).join(''):'<div class="empty">No upcoming fixtures returned for this period.</div>'}</div><div class="leagueMatchGroup"><h2>🕘 Previous matches (${past.length})</h2>${past.length?past.map(leagueFixtureCard).join(''):'<div class="empty">No completed matches returned for this period.</div>'}</div>`;
+ }catch(e){
+  if(token!==leagueFetchToken)return;
+  box.innerHTML=`<div class="leagueInfoHero"><h1>${name}</h1><div class="muted">${country}</div></div><div class="coverageNote">Could not load this league right now. ${String(e?.message||'Network error').replace(/[<>]/g,'')}</div><button class="btn primary" onclick="loadLeagueDetail()">Retry</button>`;
+ }
+}
+function renderPriority(){const el=$('priorityLeagues');if(!el)return;el.innerHTML=FEATURED_LEAGUES.map(x=>`<button type="button" class="priorityCard" onclick="openDirectoryLeague('${x[0].replace(/'/g,"\\'")}','${x[1]}')"><div class="priorityRank">TOP ${x[3]}</div><b>${x[2]} ${x[0]}</b><small>${x[1]} · Open league</small></button>`).join('')}
+function renderLeagues(){const q=($('leagueSearch')?.value||'').trim().toLowerCase();const filtered=WORLD_LEAGUES.filter(x=>(x[0]+' '+x[1]+' '+x[2]).toLowerCase().includes(q)).sort((a,b)=>a[0].localeCompare(b[0]));$('leagueCount').textContent=filtered.length+' leagues';const letters=[...new Set(filtered.map(x=>x[0][0].toUpperCase()))];$('leagueAlphabet').innerHTML=letters.map(l=>`<button onclick="document.getElementById('letter-${l}')?.scrollIntoView({behavior:'smooth',block:'start'})">${l}</button>`).join('');const groups={};filtered.forEach(x=>(groups[x[0][0].toUpperCase()]??=[]).push(x));$('leagueDirectory').innerHTML=Object.entries(groups).map(([letter,items])=>`<section class="letterGroup" id="letter-${letter}"><h2>${letter}</h2><div class="leagueDirectoryGrid">${items.map(x=>`<button type="button" class="leagueEntry" onclick="openDirectoryLeague('${x[0].replace(/'/g,"\\'")}','${x[1]}')"><b>${x[0]}</b><small>${x[1]} · ${x[2]}</small></button>`).join('')}</div></section>`).join('')||'<div class="empty">No leagues found.</div>'}
+function openDirectoryLeague(name,country){selectedLeagueInfo={name,country};go('leagueDetail');loadLeagueDetail()}
+
+const RECENT_TRANSFERS=[
+ {date:'19 Nov 2026',player:'Michael Noonan',from:'Shamrock Rovers',to:'Nottingham Forest',type:'Confirmed · €0.2m',league:'Premier League',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Gift Orban',from:'Hoffenheim',to:'Amed SK',type:'Confirmed · €3m',league:'Other',status:'confirmed'},
+ {date:'19 Nov 2026',player:"Djylian N’Guessan",from:'Saint-Étienne',to:'Liverpool',type:'Confirmed · €5m',league:'Premier League',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Charlie Cresswell',from:'Toulouse',to:'Rennes',type:'Confirmed · €22.5m',league:'Ligue 1',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Honest Ahanor',from:'Atalanta',to:'Chelsea',type:'Confirmed · €46.7m',league:'Premier League',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Mahmoud Dahoud',from:'Eintracht Frankfurt',to:'United FC (UAE)',type:'Confirmed · Free transfer',league:'Other',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Max Bilac',from:'Atalanta',to:'Novi Pazar',type:'Confirmed · Free transfer',league:'Other',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Raúl Chasco',from:'Osasuna',to:'Dubocica',type:'Confirmed · Free transfer',league:'Other',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Arnaud Bodart',from:'Lille',to:'Le Havre',type:'Confirmed · Free transfer',league:'Ligue 1',status:'confirmed'},
+ {date:'19 Nov 2026',player:'Sofiane Boufal',from:'Le Havre',to:'Al-Ittihad Tripoli',type:'Confirmed · Free transfer',league:'Other',status:'confirmed'}
+];
+const TRANSFER_RUMOURS=[
+ {date:'20 Nov 2026',player:'Scott McTominay',from:'Napoli',to:'AC Milan',type:'Reported interest · €35m',status:'rumour'},
+ {date:'20 Nov 2026',player:'Igor Matanović',from:'SC Freiburg',to:'Manchester United',type:'Reported interest · €60m',status:'rumour'},
+ {date:'20 Nov 2026',player:'Lisandro Martínez',from:'Manchester United',to:'Barcelona',type:'Reported interest · €28m',status:'rumour'},
+ {date:'19 Nov 2026',player:'Georges Mikautadze',from:'Villarreal',to:'Everton',type:'Reported interest · €60m',status:'rumour'},
+ {date:'19 Nov 2026',player:'Alessandro Bastoni',from:'Inter',to:'Barcelona',type:'Reported interest · €80m',status:'rumour'}
+];
+
+let transferTab='confirmed',transferClubFilter='All',transferSortNewest=true;
+function transferInitials(name){return name.split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase()}
+function setTransferTab(tab){transferTab=tab;transferClubFilter='All';document.getElementById('confirmedTab').classList.toggle('active',tab==='confirmed');document.getElementById('rumoursTab').classList.toggle('active',tab==='rumours');renderTransfers()}
+function toggleTransferSort(){transferSortNewest=!transferSortNewest;renderTransfers()}
+function renderTransfers(){
+ const el=$('transferList');if(!el)return;
+ const sourceRows=transferTab==='rumours'?TRANSFER_RUMOURS:RECENT_TRANSFERS;
+ const clubs=['All',...new Set(sourceRows.map(t=>t.to))];
+ $('transferClubFilters').innerHTML=clubs.slice(0,8).map(c=>`<button class="${transferClubFilter===c?'active':''}" data-club="${c.replace(/&/g,'&amp;').replace(/\"/g,'&quot;')}" onclick="transferClubFilter=this.dataset.club;renderTransfers()">${c==='All'?'⚽':transferInitials(c)} <span>${c}</span></button>`).join('');
+ let rows=sourceRows.filter(t=>transferClubFilter==='All'||t.to===transferClubFilter);
+ if(!transferSortNewest)rows=[...rows].reverse();
+ el.innerHTML=rows.map(t=>`<article class="transferCard"><div class="transferPlayer"><div class="playerInitial">${transferInitials(t.player)}</div><div><b>${t.player}</b><small>${t.type}</small></div><div class="transferDate">${t.date}</div></div><div class="transferMove"><span><span class="clubMini">${transferInitials(t.from)}</span>${t.from}</span><b>→</b><strong>${t.to}<span class="clubMini">${transferInitials(t.to)}</span></strong></div></article>`).join('')||'<div class="empty">No transfers found for this club.</div>';
+ const meta=document.querySelector('.transferMeta');if(meta)meta.innerHTML=`<span>${transferTab==='rumours'?'Reported rumours':'Confirmed transfers'} · ${rows.length}</span><span>Checked 23 Nov 2026</span>`;
+}
+
+function go(id){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));document.querySelectorAll(".bottomNav [data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===id));if(id==="teams")renderTeams();if(id==="leagues")renderLeagues();if(id==="transfers")renderTransfers();window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+function fa(v){return Number(v??0).toLocaleString("en-GB")}
+function dateFa(d){return new Date(d+"T12:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"})}
+function activeResults(){return currentLeague==='laliga'?LALIGA_RESULTS:PRE_BREAK}
+function activeTeams(){return currentLeague==='laliga'?LALIGA_TEAMS:[...new Set([...PRE_BREAK.flatMap(x=>[x[1],x[2]]),...activeUpcoming().flatMap(x=>[x[1],x[2]])])]}
+function setLeague(l){currentLeague=l;document.title='90Kick | '+(l==='pl'?'Premier League':'LaLiga');renderTeams();renderFavorites();if($('teamProfile').classList.contains('active')&&selectedTeam)openTeam(selectedTeam)}
+function matchCard(m,upcoming=false){return `<div class="match" role="button" tabindex="0" onclick='openMatch(${JSON.stringify(m)},${upcoming})' onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openMatch(${JSON.stringify(m)},${upcoming})}"><div class="date">${dateFa(m[0])}</div><div class="club">${logoMarkup(m[1])}${m[1]}</div><div class="score">${upcoming?'—':m[3]+' - '+m[4]}<small>${upcoming?'Scheduled':'Full time'}</small></div><div class="club away">${m[2]}${logoMarkup(m[2])}</div></div>`}
+function groupBlock(title,hint,rows,upcoming=false){return `<section class="matchGroup"><h2>${title}</h2><p class="groupHint">${hint}</p><div class="matchList">${rows.map(x=>matchCard(x,upcoming)).join('')}</div></section>`}
+function renderMatches(){const laliga=currentLeague==='laliga';const results=activeResults();const upcoming=activeUpcoming();if(laliga){$('allMatches').innerHTML=groupBlock('Upcoming LaLiga fixtures','Matchday 13 • 20–23 November 2026',upcoming,true)+groupBlock('Latest LaLiga matches','Matchday 12 • 6–8 November 2026',results);$('homeMatches').innerHTML=groupBlock('Upcoming LaLiga fixtures','Next matchday • 20–23 November 2026',upcoming.slice(0,5),true)+groupBlock('Latest LaLiga matches','Matchday 12 • 6–8 November 2026',results.slice(0,5));$('sourceLabel').textContent='LaLiga fixtures + saved results';$('lastUpdate').textContent='19 Nov 2026'}else{$('allMatches').innerHTML=groupBlock('Upcoming Premier League fixtures','Matchweeks 11–12 • 21–29 November 2026',upcoming,true)+groupBlock('Latest matches before the international break','Matchweek 10 • 6–8 November 2026',PRE_BREAK)+groupBlock('Previous matchweek','31 October 2026',PREVIOUS_ROUND);$('homeMatches').innerHTML=groupBlock('Upcoming Premier League fixtures','Next matchweek • 21–23 November 2026',NEXT_AFTER_BREAK,true)+groupBlock('Latest matches before the international break','Matchweek 10 • 6–8 November 2026',PRE_BREAK.slice(0,5));$('sourceLabel').textContent='Premier League fixtures + saved results';$('lastUpdate').textContent='19 Nov 2026'}$('matchTotal').textContent=fa(results.length+upcoming.length);$('matchStatus').innerHTML='<i class="dot ok"></i> Fixtures and saved results'}
+
+let selectedMatch=null,selectedMatchUpcoming=false,activeMatchTab='facts';
+let selectedLeagueMatchEvent=null,selectedLeagueMatchSlug=null,selectedLeagueMatchName=null,selectedLeagueMatchSummary=null,selectedLeagueMatchError=null;
+function openLeagueFixture(eventId){
+ const e=leagueEventCache[String(eventId)];if(!e)return;
+ const comp=e.competitions?.[0]||{},teams=comp.competitors||[],h=teams.find(x=>x.homeAway==='home')||teams[0]||{},a=teams.find(x=>x.homeAway==='away')||teams[1]||{};
+ const home=h.team?.displayName||h.team?.name||'Home',away=a.team?.displayName||a.team?.name||'Away',played=e.status?.type?.state==='post';
+ selectedLeagueMatchEvent=e;selectedLeagueMatchSlug=ESPN_LEAGUE_MAP[selectedLeagueInfo?.name]||null;selectedLeagueMatchName=selectedLeagueInfo?.name||'League';selectedLeagueMatchSummary=null;selectedLeagueMatchError=null;
+ selectedMatch=[String(e.date||'').slice(0,10),home,away,h.score??'',a.score??''];selectedMatchUpcoming=!played;activeMatchTab='facts';
+ $('matchLeagueName').textContent=selectedLeagueMatchName;renderMatchDetail();go('matchDetail');loadLeagueMatchSummary();
+}
+async function loadLeagueMatchSummary(){
+ const event=selectedLeagueMatchEvent,slug=selectedLeagueMatchSlug;if(!event||!slug)return;
+ try{const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}/summary?event=${encodeURIComponent(event.id)}`);if(!r.ok)throw new Error(`HTTP ${r.status}`);selectedLeagueMatchSummary=await r.json();selectedLeagueMatchError=null;}
+ catch(err){selectedLeagueMatchError=err?.message||'Unable to load match report';}
+ if(selectedLeagueMatchEvent?.id===event.id)renderMatchTab();
+}
+function openMatch(match,upcoming=false){selectedLeagueMatchEvent=null;selectedLeagueMatchSlug=null;selectedLeagueMatchName=null;selectedLeagueMatchSummary=null;selectedLeagueMatchError=null;selectedMatch=match;selectedMatchUpcoming=upcoming;activeMatchTab='facts';$('matchLeagueName').textContent=currentLeague==='laliga'?'LaLiga':'Premier League';renderMatchDetail();go('matchDetail')}
+function renderMatchDetail(){if(!selectedMatch)return;const m=selectedMatch;const home=m[1],away=m[2],score=selectedMatchUpcoming?'—':`${m[3]} - ${m[4]}`;$('matchDetailContent').innerHTML=`<div class="matchHero"><div class="eyebrow" style="text-align:center">${selectedLeagueMatchName|| (currentLeague==='laliga'?'LALIGA EA SPORTS':'PREMIER LEAGUE')}</div><div class="matchScoreline"><div class="club">${logoMarkup(home)}<b>${home}</b></div><div><div class="matchBigScore">${score}</div><div class="matchMeta">${selectedMatchUpcoming?'Scheduled':'Full time'}</div></div><div class="club">${logoMarkup(away)}<b>${away}</b></div></div><div class="matchMeta">${dateFa(m[0])} • ${selectedMatchUpcoming?'Fixture':'Final result'}</div></div><div class="matchTabs">${[['facts','Facts'],['commentary','Commentary'],['lineup','Lineup'],['table','Table'],['stats','Stats'],['h2h','H2H']].map(([id,label])=>`<button class="${activeMatchTab===id?'active':''}" onclick="showMatchTab('${id}')">${label}</button>`).join('')}</div><div class="matchDetailContent" id="matchTabContent"></div>`;renderMatchTab()}
+function showMatchTab(tab){activeMatchTab=tab;renderMatchDetail()}
+const lineupCache={};
+function espnLeague(){return selectedLeagueMatchSlug||(currentLeague==='laliga'?'esp.1':'eng.1')}
+function normTeam(v){return String(v||'').toLowerCase().replace(/[^a-z0-9]/g,'').replace('afcbournemouth','bournemouth').replace('brightonandhovealbion','brighton').replace('deportivolacoruna','deportivo')}
+function normalizePosition(value){const raw=String(value||'').trim().toUpperCase().replace(/[._]/g,'-').replace(/\s+/g,' ');const aliases={'CD-L':'CB','CD-R':'CB','CD':'CB','DFC':'CB','DC':'CB','CENTRE-BACK':'CB','CENTER-BACK':'CB','CENTRAL DEFENDER':'CB','LEFT CENTRE-BACK':'CB','RIGHT CENTRE-BACK':'CB','LI':'LB','LD':'RB','CARRILERO IZQUIERDO':'LWB','CARRILERO DERECHO':'RWB','POR':'GK','GOALKEEPER':'GK','PORTERO':'GK','MEDIOCENTRO':'CM','MEDIAPUNTA':'AM','DELANTERO':'ST','EXTREMO IZQUIERDO':'LW','EXTREMO DERECHO':'RW'};return aliases[raw]||raw.replace(/-L$/,'').replace(/-R$/,'')}
+function scanLineupNodes(node,out,seen=new Set(),teamName=''){if(!node||typeof node!=='object'||seen.has(node))return;seen.add(node);if(Array.isArray(node)){for(const x of node)scanLineupNodes(x,out,seen,teamName);return}const currentTeam=node.team?.displayName||node.team?.name||node.team?.shortDisplayName||teamName;if(node.athlete&&typeof node.athlete==='object'){const a=node.athlete;const name=a.displayName||a.fullName||a.name;if(name){const pos=node.position?.abbreviation||node.position?.displayName||node.position?.name||a.position?.abbreviation||a.position?.displayName||'';out.push({name,team:currentTeam,starter:node.starter===true||node.isStarter===true,position:normalizePosition(pos)})}}for(const [k,v] of Object.entries(node)){if(k==='athlete')continue;scanLineupNodes(v,out,seen,currentTeam)}}
+function extractGoalScorers(data){const list=[];const plays=[...(Array.isArray(data?.scoringPlays)?data.scoringPlays:[]),...(Array.isArray(data?.commentary)?data.commentary:[])];for(const play of plays){const label=String(play?.type?.text||play?.text||play?.shortText||'').toLowerCase();const athlete=play?.athlete||play?.participants?.[0]?.athlete||play?.scorer;const name=athlete?.displayName||athlete?.fullName||athlete?.name||play?.athleteName;const team=play?.team?.displayName||play?.team?.name||play?.teamName||'';if(name&&(label.includes('goal')||play?.scoringPlay===true))list.push({name,team})}return [...new Map(list.map(x=>[x.name.toLowerCase()+'|'+normTeam(x.team),x])).values()]}
+async function loadMatchLineups(){
+ if(!selectedMatch)return;
+ const m=selectedMatch,key=currentLeague+'|'+m[0]+'|'+m[1]+'|'+m[2];
+ const box=$('lineupResult');if(box)box.innerHTML='<div class="empty">Loading match lineups…</div>';
+ try{
+  let data;
+  if(selectedLeagueMatchEvent&&selectedLeagueMatchSlug){
+   data=selectedLeagueMatchSummary;
+   if(!data){const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${selectedLeagueMatchSlug}/summary?event=${encodeURIComponent(selectedLeagueMatchEvent.id)}`);if(!r.ok)throw new Error(`HTTP ${r.status}`);data=await r.json();selectedLeagueMatchSummary=data;selectedLeagueMatchError=null;}
+  }else{
+   const date=m[0].replaceAll('-','');
+   const sb=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${espnLeague()}/scoreboard?dates=${date}`);
+   if(!sb.ok)throw new Error('Scoreboard unavailable');
+   const scoreData=await sb.json();
+   const event=(scoreData.events||[]).find(e=>{const c=e.competitions?.[0]?.competitors||[];const names=c.map(x=>x.team?.displayName||x.team?.name||'');return names.some(n=>normTeam(n)===normTeam(m[1]))&&names.some(n=>normTeam(n)===normTeam(m[2]))});
+   if(!event)throw new Error('Match not found in match feed');
+   const summaryRes=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${espnLeague()}/summary?event=${event.id}`);
+   if(!summaryRes.ok)throw new Error('Match details unavailable');data=await summaryRes.json();
+  }
+  const raw=[];scanLineupNodes(data.rosters||data.lineups||data.boxscore?.players||data,raw);
+  const unique=[...new Map(raw.map(x=>[x.name+'|'+x.starter,x])).values()];
+  lineupCache[key]={players:unique,scorers:extractGoalScorers(data)};
+  renderMatchTab();
+ }catch(err){lineupCache[key]={error:err.message};renderMatchTab()}
+}
+function leagueMatchFactsMarkup(){
+ const e=selectedLeagueMatchEvent,summary=selectedLeagueMatchSummary,comp=e?.competitions?.[0]||{},venue=comp.venue||{},status=e?.status?.type?.detail||e?.status?.type?.description||(selectedMatchUpcoming?'Scheduled':'Full time');
+ const rows=[['Competition',selectedLeagueMatchName],['Date',e?.date?new Date(e.date).toLocaleString('en-GB',{dateStyle:'full',timeStyle:'short'}):selectedMatch?.[0]],['Venue',venue.fullName],['City',venue.address?.city],['Attendance',comp.attendance?Number(comp.attendance).toLocaleString('en-GB'):null],['Round',comp.series?.summary||comp.notes?.[0]?.headline],['Status',status]];
+ const officials=summary?.gameInfo?.officials||summary?.officials||[];
+ const referee=officials.find(x=>/referee/i.test(x?.type?.text||x?.type||''))?.athlete?.displayName||officials.find(x=>/referee/i.test(x?.type?.text||x?.type||''))?.displayName;
+ if(referee)rows.push(['Referee',referee]);
+ const h=comp.competitors?.find(x=>x.homeAway==='home')||comp.competitors?.[0]||{},a=comp.competitors?.find(x=>x.homeAway==='away')||comp.competitors?.[1]||{};
+ rows.push(['Home team',h.team?.displayName||selectedMatch?.[1]],['Away team',a.team?.displayName||selectedMatch?.[2]],['Result',selectedMatchUpcoming?'Not played yet':`${h.score??selectedMatch?.[3]??'—'} - ${a.score??selectedMatch?.[4]??'—'}`]);
+ return `<div class="profileCard"><h3>Match facts</h3>${rows.filter(x=>x[1]!==undefined&&x[1]!==null&&x[1]!=='').map(x=>`<div class="quick"><span>${x[0]}</span><b>${String(x[1])}</b></div>`).join('')}</div>`;
+}
+function leagueMatchEventsMarkup(){
+ const d=selectedLeagueMatchSummary||{},items=[...(Array.isArray(d.scoringPlays)?d.scoringPlays:[]),...(Array.isArray(d.keyEvents)?d.keyEvents:[]),...(Array.isArray(d.plays)?d.plays:[]),...(Array.isArray(d.commentary)?d.commentary:[])];
+ const unique=[...new Map(items.map((x,i)=>[x.id||`${x.clock?.displayValue||x.time||''}|${x.text||x.shortText||i}`,x])).values()];
+ if(!unique.length)return `<div class="empty">${selectedLeagueMatchError?`Match report unavailable (${selectedLeagueMatchError}).`:'No commentary or event timeline was supplied by the match data provider.'}</div>`;
+ return unique.slice(0,100).map(x=>{const time=x.clock?.displayValue||x.time||x.period?.displayValue||'';const detail=x.text||x.shortText||x.type?.text||x.type?.description||x.participants?.map(p=>p.athlete?.displayName).filter(Boolean).join(', ')||'Match event';return `<div class="quick"><span>${String(time)}</span><b>${String(detail)}</b></div>`}).join('');
+}
+function leagueMatchStatsMarkup(){
+ const groups=selectedLeagueMatchSummary?.boxscore?.teams||[],rows=[];
+ for(const g of groups){const team=g.team?.displayName||g.team?.name||'Team';for(const st of g.statistics||[])rows.push(`<div class="quick"><span>${team} · ${st.label||st.name||'Statistic'}</span><b>${st.displayValue??st.value??'—'}</b></div>`)}
+ return rows.length?rows.join(''):'<div class="empty">Detailed statistics have not been supplied for this match.</div>';
+}
+function renderMatchTab(){if(!selectedMatch)return;const m=selectedMatch,home=m[1],away=m[2],played=!selectedMatchUpcoming;let html='';if(activeMatchTab==='facts'){html=selectedLeagueMatchEvent?leagueMatchFactsMarkup():`<div class="profileCard"><h3>Match facts</h3><div class="quick"><span>Competition</span><b>${currentLeague==='laliga'?'LaLiga':'Premier League'}</b></div><div class="quick"><span>Date</span><b>${dateFa(m[0])}</b></div><div class="quick"><span>Home team</span><b>${home}</b></div><div class="quick"><span>Away team</span><b>${away}</b></div><div class="quick"><span>Result</span><b>${played?m[3]+' - '+m[4]:'Not played yet'}</b></div><div class="quick"><span>Status</span><b>${played?'Full time':'Scheduled'}</b></div></div>`}else if(activeMatchTab==='commentary'){html=`<div class="profileCard"><h3>Commentary & match events</h3>${selectedLeagueMatchEvent?(selectedLeagueMatchSummary?leagueMatchEventsMarkup():(selectedLeagueMatchError?leagueMatchEventsMarkup():'<div class="empty">Loading match events…</div>')):`<div class="empty">${played?'Detailed goal times, cards and live commentary are not included in the saved data for this match.':'Commentary will be available after the match.'}</div>`}</div>`}else if(activeMatchTab==='lineup'){const key=currentLeague+'|'+m[0]+'|'+home+'|'+away,loaded=lineupCache[key];if(loaded?.players?.length){const starters=loaded.players.filter(p=>p.starter);const players=starters.length?starters:loaded.players;const byTeam=[home,away].map(team=>({team,items:players.filter(p=>p.team&&normTeam(p.team)===normTeam(team))}));const assigned=byTeam.some(g=>g.items.length);const lineupMarkup=assigned?byTeam.map(g=>`<div><h4>${g.team}</h4><div class="lineupGrid">${g.items.map(p=>`<div class="lineupSlot">${p.name}${(loaded.scorers||[]).some(g=>g.name.toLowerCase()===p.name.toLowerCase()&&(!g.team||!p.team||normTeam(g.team)===normTeam(p.team)))?' ⚽':''}${p.position?` <span class="muted">· ${p.position}</span>`:''}</div>`).join('')||'<div class="empty">No players returned</div>'}</div></div>`).join(''): `<div class="lineupGrid">${players.map(p=>`<div class="lineupSlot">${p.name}${(loaded.scorers||[]).some(g=>g.name.toLowerCase()===p.name.toLowerCase()&&(!g.team||!p.team||normTeam(g.team)===normTeam(p.team)))?' ⚽':''}${p.position?` <span class="muted">· ${p.position}</span>`:''}</div>`).join('')}</div>`;html=`<div class="profileCard"><h3>Match lineups · ESPN data</h3><div class="small muted" style="margin-bottom:8px">⚽ Goal scorer</div><div class="small muted" style="margin-bottom:10px">${starters.length?'Starting players':'Players returned by the match feed'} · ${players.length} listed</div>${lineupMarkup}<div class="small muted" style="margin-top:10px">Lineup data provider: ESPN</div></div>`}else if(loaded?.error){html=`<div class="profileCard"><h3>Starting lineups</h3><div class="empty">${played?'The ESPN feed did not return lineup data for this match.':'Official lineups have not been published yet.'}<br><button class="btn" onclick="loadMatchLineups()">Try again</button></div></div>`}else{html=`<div class="profileCard"><h3>Starting lineups</h3><div class="empty">${played?'Load the match report to check whether ESPN has the official lineup.':'Official starting XIs are usually published shortly before kick-off; they are not available yet.'}<br><button class="btn primary" onclick="loadMatchLineups()">Load official lineup</button></div><div class="small muted" style="margin-top:10px">Data source: ESPN match feed. No predicted player names are shown.</div></div>`}}else if(activeMatchTab==='table'){const rows=currentLeague==='laliga'?LALIGA_TABLE:REAL_STANDINGS;html=`<div class="profileCard"><h3>${currentLeague==='laliga'?'LaLiga':'Premier League'} table</h3>${standingsMarkup(rows)}</div>`}else if(activeMatchTab==='stats'){html=`<div class="profileCard"><h3>Match statistics</h3>${selectedLeagueMatchEvent?(selectedLeagueMatchSummary?leagueMatchStatsMarkup():(selectedLeagueMatchError?leagueMatchStatsMarkup():'<div class="empty">Loading match statistics…</div>')):'<div class="empty">Detailed possession, shots, shots on target, corners and passing statistics are not available for this match.</div>'}</div>`}else if(activeMatchTab==='h2h'){const past=(currentLeague==='laliga'?LALIGA_RESULTS:PRE_BREAK.concat(PREVIOUS_ROUND)).filter(x=>(x[1]===home&&x[2]===away)||(x[1]===away&&x[2]===home));html=`<div class="profileCard"><h3>Head to head</h3>${past.length?past.map(x=>`<div class="quick"><span>${x[1]} ${x[3]} - ${x[4]} ${x[2]}</span><b>${dateFa(x[0])}</b></div>`).join(''):'<div class="empty">No previous head-to-head results between these teams are included in the saved dataset.</div>'}</div>`}$('matchTabContent').innerHTML=html}
+
+async function loadMatches(){renderMatches()}
+const REAL_STANDINGS=[
+ ["Arsenal",10,9,0,1,15,5,10,27],["Brighton & Hove Albion",10,7,1,2,26,7,19,22],["Manchester City",10,7,0,3,21,13,8,21],["Liverpool",10,5,3,2,14,10,4,18],["Chelsea",10,5,1,4,19,16,3,16],["Everton",10,4,4,2,12,10,2,16],["Bournemouth",10,4,3,3,16,14,2,15],["Brentford",10,3,5,2,16,11,5,14],["Leeds United",10,3,5,2,10,8,2,14],["Aston Villa",10,3,4,3,14,17,-3,13],["Tottenham Hotspur",10,3,3,4,10,11,-1,12],["Newcastle United",10,3,3,4,13,16,-3,12],["Hull City",10,2,5,3,11,11,0,11],["Ipswich Town",10,3,2,5,15,20,-5,11],["Fulham",10,2,4,4,10,12,-2,10],["Nottingham Forest",10,2,3,5,9,13,-4,9],["Coventry City",10,3,0,7,10,19,-9,9],["Manchester United",10,1,5,4,14,19,-5,8],["Sunderland",10,2,2,6,8,17,-9,8],["Crystal Palace",10,2,1,7,10,24,-14,7]
+];
+function standingsMarkup(rows){return `<div class="small muted" style="margin-bottom:10px">${currentLeague==='laliga'?'LaLiga':'Premier League'} • 2026–27 season • Saved snapshot</div><div style="overflow:auto"><table><thead><tr><th>Pos</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead><tbody>${rows.map((x,i)=>`<tr><td>${i+1}</td><td><span style="display:flex;align-items:center;gap:7px;white-space:nowrap;cursor:pointer" onclick="openTeam('${x[0]}')">${logoMarkup(x[0])}<b>${x[0]}</b></span></td>${x.slice(1,5).map(v=>`<td>${fa(v)}</td>`).join('')}<td>${fa(x[5])}</td><td>${fa(x[6])}</td><td>${x[7]>0?'+':''}${fa(x[7])}</td><td><b>${fa(x[8])}</b></td></tr>`).join('')}</tbody></table></div><div class="small muted" style="margin-top:10px">Saved standings snapshot. Not a live data feed.</div>`}
+async function loadStandings(){standings=currentLeague==='laliga'?LALIGA_TABLE:REAL_STANDINGS;const html=standingsMarkup(standings);$('standingsTable').innerHTML=html;$('homeStandings').innerHTML=html}
+function renderTeams(){allTeams=activeTeams().map(n=>({id:currentLeague+':'+n,name:n}));const q=($('teamSearch').value||'').toLowerCase().trim();const list=allTeams.filter(t=>t.name.toLowerCase().includes(q));$('teamCards').innerHTML=list.map(t=>`<div class="teamcard" onclick="openTeam('${t.name}')"><div class="teamTop">${logoMarkup(t.name,'teamLogo')}<button class="star ${favorites.includes(t.id)?'on':''}" onclick="event.stopPropagation();toggleFavorite('${t.id}')">${favorites.includes(t.id)?'★':'☆'}</button></div><b>${t.name}</b><small>${currentLeague==='laliga'?'LaLiga':'Premier League'} · View profile →</small></div>`).join('')}
+function openTeam(name){selectedTeam=name;const id=currentLeague+':'+name;const table=(currentLeague==='laliga'?LALIGA_TABLE:REAL_STANDINGS).find(x=>x[0]===name);const rows=activeResults().filter(x=>x[1]===name||x[2]===name).sort((a,b)=>b[0].localeCompare(a[0]));const last=rows[0];const next=activeUpcoming().find(x=>x[1]===name||x[2]===name);const result=last?`${last[1]} ${last[3]} - ${last[4]} ${last[2]}`:'No verified recent result in the current saved match data.';$('profileLeague').textContent=currentLeague==='laliga'?'LaLiga':'Premier League';$('teamProfileContent').innerHTML=`<div class="profileHero">${logoMarkup(name,'teamLogo')}<div style="flex:1"><div class="eyebrow">${currentLeague==='laliga'?'LALIGA EA SPORTS':'PREMIER LEAGUE'}</div><h1>${name}</h1><div class="muted small">2026/27 Season</div></div><button class="followBtn ${favorites.includes(id)?'following':''}" onclick="toggleFavorite('${id}');openTeam('${name}')">${favorites.includes(id)?'✓ Following':'＋ Follow Team'}</button></div><div class="profileStats"><div class="statBox"><span class="muted small">Position</span><b>${table?((currentLeague==='laliga'?LALIGA_TABLE:REAL_STANDINGS).indexOf(table)+1):'—'}</b></div><div class="statBox"><span class="muted small">Played</span><b>${table?table[1]:'—'}</b></div><div class="statBox"><span class="muted small">Points</span><b>${table?table[8]:'—'}</b></div><div class="statBox"><span class="muted small">Goal difference</span><b>${table?(table[7]>0?'+':'')+table[7]:'—'}</b></div></div><div class="profileGrid"><div class="panel"><h3>Next Match</h3><div class="empty">${next?`${next[1]} — ${next[2]}<br>${dateFa(next[0])}<br><button class="btn" onclick="openMatch(${JSON.stringify(next)},true)">View match</button>`:'No upcoming fixture in the saved dataset.'}</div></div><div class="panel"><h3>Latest Match</h3><div class="empty">${result}<br><span class="small">${last?dateFa(last[0]):''}</span></div></div></div><div class="panel section"><h3>Last Match Lineup</h3><div class="empty">${last?`Open the last match to load its official lineup from ESPN.<br><button class="btn primary" onclick="openMatch(${JSON.stringify(last)},false);showMatchTab('lineup')">View last match lineup</button>`:'No recent match is available in the saved dataset.'}</div></div>`;go('teamProfile')}
+function toggleFavorite(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem('90kick_favorites',JSON.stringify(favorites));renderTeams();renderFavorites()}
+function renderFavorites(){const list=allTeams.filter(t=>favorites.includes(t.id));if($('favoriteCount'))$('favoriteCount').textContent=String(favorites.length);$('favoriteSummary').innerHTML=list.length?list.map(t=>`<div class="quick"><span>⚽ ${t.name}</span><b>★</b></div>`).join(''):'You haven’t saved any teams yet.'}
+async function refreshAll(){renderMatches();renderTeams();renderFavorites();await loadStandings()}
+renderPriority();renderLeagues();renderTeams();renderFavorites();loadAllLeagueLogos();
+</script></body></html>
+
